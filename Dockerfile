@@ -20,11 +20,11 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
 
 # Install server deps only (no devDeps)
-COPY server/package*.json ./
+COPY package*.json ./
 RUN npm ci --only=production --silent
 
 # Copy server source
-COPY server/ ./
+COPY index.js config.js logger.js telegram.js tokenStore.js ./
 
 # Copy built React app from Stage 1
 COPY --from=client-build /app/client/build ./client/build
